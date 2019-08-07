@@ -1,0 +1,20 @@
+variable:
+  region: us-west-1
+  ucp_password: dockerdocker
+
+provider:
+  aws:
+    region: ${region}
+
+cluster:
+  engine:
+    version: "ee-stable-18.09.5"
+  ucp:
+    version: "docker/ucp:3.1.6"
+    username: "admin"
+    password: ${ucp_password}
+
+resource:
+  aws_instance:
+    managers:
+      quantity: 1

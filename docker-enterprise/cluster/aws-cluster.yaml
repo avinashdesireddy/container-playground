@@ -1,0 +1,39 @@
+variable:
+  domain: "avinash.dockerps.io"
+  subdomain: "dev-ucp"
+  region: us-west-1
+  ucp_password:
+    type: prompt
+
+provider:
+  aws:
+    region: ${region}
+
+cluster:
+  engine:
+    version: "ee-stable-19.03"
+  ucp:
+    version: "docker/ucp:3.1.9"
+    username: "docker"
+    password: ${ucp_password}
+
+resource:
+  aws_instance:
+    managers:
+      instance_type: t2.xlarge
+      quantity: 1
+    workers:
+      instance_type: t2.xlarge
+      quantity: 1
+  aws_lb:
+    ucp:
+      domain: ${subdomain}.${domain}
+      instances:
+      - managers
+      ports:
+      - 443:443
+      - 6443:6443
+  aws_route53_zone:
+    dns:
+      domain: ${domain}
+      subdomain: ${subdomain}
