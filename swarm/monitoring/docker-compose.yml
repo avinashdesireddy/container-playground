@@ -1,0 +1,146 @@
+version: '3.4'
+
+volumes:
+  prometheus-metrics-data:
+  grafana-data:
+
+networks:
+  monitoring-frontend:
+    driver: overlay
+    attachable: true
+  monitoring-backend:
+    driver: overlay
+    attachable: true    
+
+configs:
+  prometheus.yml:
+    file: ./prometheus.yml  
+
+secrets:
+  prometheus-password:
+    external: true      
+           
+services:
+
+  ########################################################################################################################
+  # Nginx Reverse Proxy to secure Prometheus
+  # This container needs to be run on 1 node in the swarm.    
+  # https://store.docker.com/images/nginx   
+  ########################################################################################################################    
+  monitoring-nginx:
+    image: avinashdesireddy/monitoring-nginx:latest
+    hostname: monitoring-nginx
+    environment:
+      PROMETHEUS_PASSWORD_FILE: '/run/secrets/prometheus-password'
+    secrets:
+      - prometheus-password      
+    deploy:
+      restart_policy:
+        condition: any
+        delay: 5s
+        max_attempts: 5
+      labels:
+        com.docker.lb.hosts: prom.apps.avinash.dockerps.io
+        com.docker.lb.network: grafana-prometheus_monitoring-frontend
+        com.docker.lb.port: 8081
+    networks:
+      - monitoring-frontend
+      - monitoring-backend  
+
+  ########################################################################################################################
+  # GUI Frontend for Prometheus
+  # This container needs to be run on 1 node in the swarm.    
+  # https://hub.docker.com/r/grafana/grafana/  
+  # https://github.com/grafana/grafana-docker    
+  ########################################################################################################################    
+  monitoring-grafana:
+    image: grafana/grafana:latest
+    deploy:
+      restart_policy:
+        condition: any
+        delay: 5s
+        max_attempts: 5
+      labels:
+        com.docker.lb.hosts: grafana.apps.avinash.dockerps.io
+        com.docker.lb.network: grafana-prometheus_monitoring-frontend
+        com.docker.lb.port: 3000 
+    networks:
+      - monitoring-frontend
+      - monitoring-backend  
+    volumes:
+      - grafana-data:/var/lib/grafana
+  
+  ########################################################################################################################
+  # Prometheus - Systems and service monitoring system.
+  # It collects metrics from configured targets at given intervals, evaluates rule expressions,
+  # displays the results, and can trigger alerts if some condition is observed to be true.      
+  # This container needs to be run on 1 node in the swarm.
+  # https://hub.docker.com/r/prom/prometheus/
+  # https://github.com/prometheus/prometheus
+  ########################################################################################################################
+  monitoring-prometheus:
+    image: prom/prometheus:latest
+    networks:
+      - monitoring-backend  
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'            
+    volumes:
+      - prometheus-metrics-data:/prometheus
+    configs:
+      - source: prometheus.yml
+        target: /etc/prometheus/prometheus.yml  
+
+  ########################################################################################################################
+  # cAdvisor - collects, aggregates, processes about running containers.
+  # Prometheus will scrape the cAdvisor servers for the metrics.
+  # This container needs to be run on all nodes in the swarm. 
+  # https://hub.docker.com/r/google/cadvisor/
+  # https://github.com/google/cadvisor
+  ########################################################################################################################    
+  monitoring-cadvisor:
+    image: google/cadvisor:latest
+    deploy:
+      mode: global
+      restart_policy:
+        condition: any
+        delay: 5s
+        max_attempts: 5
+      labels:
+        com.docker.lb.hosts: cadvisor.apps.avinash.dockerps.io
+        com.docker.lb.network: grafana-prometheus_monitoring-backend
+        com.docker.lb.port: 8080
+    networks:
+      - monitoring-backend  
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+
+  ########################################################################################################################
+  # node_exporter - collect system metrics like cpu/memory/storage usage.
+  # Prometheus will scrape the node exporters for the collected metrics.
+  # This container needs to be run on all nodes in the swarm.  
+  # https://hub.docker.com/r/prom/node-exporter/  
+  # https://github.com/prometheus/node_exporter
+  ######################################################################################################################## 
+  monitoring-node-exporter:
+    # Node Exporter renamed metric names in v.16.0 version of their docker image which broke many existing Dashboards available from the Grafana website.
+    # https://github.com/prometheus/node_exporter/issues/830
+    # This Solution Brief used the v0.15.0 version of their docker image.
+    # image: prom/node-exporter:latest
+    image: prom/node-exporter:v0.15.0
+    deploy:
+      mode: global
+      restart_policy:
+        condition: any
+        delay: 5s
+        max_attempts: 5
+      labels:
+        com.docker.lb.hosts: nodeexporter.apps.avinash.dockerps.io
+        com.docker.lb.network: grafana-prometheus_monitoring-backend
+        com.docker.lb.port: 9100
+    networks:
+      - monitoring-backend  
+      
