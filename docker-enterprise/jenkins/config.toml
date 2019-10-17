@@ -1,0 +1,69 @@
+ListenAddr = ":8080"
+DockerURL = "unix:///var/run/docker.sock"
+AllowInsecure = false
+PollInterval = "3s"
+
+[Extensions]
+  [Extensions.default]
+    Image = "docker/ucp-interlock-extension:3.2.1"
+    ServiceName = "ucp-interlock-extension"
+    Args = []
+    Constraints = ["node.labels.com.docker.ucp.orchestrator.swarm==true", "node.platform.os==linux"]
+    ProxyImage = "docker/ucp-interlock-proxy:3.2.1"
+    ProxyServiceName = "ucp-interlock-proxy"
+    ProxyConfigPath = "/etc/nginx/nginx.conf"
+    ProxyReplicas = 2
+    ProxyStopSignal = "SIGQUIT"
+    ProxyStopGracePeriod = "5s"
+    ProxyConstraints = ["node.labels.com.docker.ucp.orchestrator.swarm==true", "node.platform.os==linux"]
+    PublishMode = "ingress"
+    PublishedPort = 8080
+    TargetPort = 80
+    PublishedSSLPort = 8443
+    TargetSSLPort = 443
+    [Extensions.default.Labels]
+      "com.docker.ucp.InstanceID" = "85lk80nljwg4xs7r8qmqed5jc"
+    [Extensions.default.ContainerLabels]
+      "com.docker.ucp.InstanceID" = "85lk80nljwg4xs7r8qmqed5jc"
+    [Extensions.default.ProxyLabels]
+      "com.docker.ucp.InstanceID" = "85lk80nljwg4xs7r8qmqed5jc"
+    [Extensions.default.ProxyContainerLabels]
+      "com.docker.ucp.InstanceID" = "85lk80nljwg4xs7r8qmqed5jc"
+    [Extensions.default.Config]
+      Version = ""
+      HTTPVersion = "1.1"
+      User = "nginx"
+      PidPath = "/var/run/proxy.pid"
+      MaxConnections = 1024
+      ConnectTimeout = 5
+      SendTimeout = 600
+      ReadTimeout = 600
+      IPHash = false
+      AdminUser = ""
+      AdminPass = ""
+      SSLOpts = ""
+      SSLDefaultDHParam = 1024
+      SSLDefaultDHParamPath = ""
+      SSLVerify = "required"
+      WorkerProcesses = 1
+      RLimitNoFile = 65535
+      SSLCiphers = "HIGH:!aNULL:!MD5"
+      SSLProtocols = "TLSv1.2"
+      AccessLogPath = "/dev/stdout"
+      ErrorLogPath = "/dev/stdout"
+      MainLogFormat = "'$remote_addr - $remote_user [$time_local] \"$request\" '\n\t\t    '$status $body_bytes_sent \"$http_referer\" '\n\t\t    '\"$http_user_agent\" \"$http_x_forwarded_for\"';"
+      TraceLogFormat = "'$remote_addr - $remote_user [$time_local] \"$request\" $status '\n\t\t    '$body_bytes_sent \"$http_referer\" \"$http_user_agent\" '\n\t\t    '\"$http_x_forwarded_for\" $reqid $msec $request_time '\n\t\t    '$upstream_connect_time $upstream_header_time $upstream_response_time';"
+      KeepaliveTimeout = "75s"
+      ClientMaxBodySize = "32m"
+      ClientBodyBufferSize = "8k"
+      ClientHeaderBufferSize = "1k"
+      LargeClientHeaderBuffers = "4 8k"
+      ClientBodyTimeout = "60s"
+      UnderscoresInHeaders = false
+      UpstreamZoneSize = 64
+      ServerNamesHashBucketSize = 128
+      GlobalOptions = []
+      HTTPOptions = ["proxy_set_header        X-Forwarded-Proto $scheme"]
+      TCPOptions = []
+      HideInfoHeaders = false
+

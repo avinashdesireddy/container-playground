@@ -1,0 +1,29 @@
+version: '3.7'
+
+volumes:
+  jenkins_home:
+
+networks:
+  jenkins:
+
+services:
+  jenkins:
+    image: jenkins/jenkins:lts 
+    user: jenkins
+    volumes:
+      - jenkins_home:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - jenkins 
+    deploy:
+      restart_policy:
+        condition: any
+        delay: 5s
+        max_attempts: 5
+      labels:
+        com.docker.lb.hosts: jenkins.apps.avinash.dockerps.io
+        com.docker.lb.network: ci_jenkins
+        com.docker.lb.port: 8080
+    ports:
+      - "5000:5000"
+      - "50000:50000"
