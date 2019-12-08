@@ -1,0 +1,62 @@
+variable:
+  domain: "avinash.dockerps.io"
+  subdomain: "sd"
+  region: "us-west-1"
+  email: "avinash.desireddy@docker.com"
+  ucp_password:
+    type: prompt
+
+provider:
+  acme:
+    email: ${email}
+    server_url: https://acme-staging-v02.api.letsencrypt.org/directory
+  aws:
+    region: ${region}
+cluster:
+  dtr:
+    version: docker/dtr:2.7.4
+  engine:
+    version: ee-stable-19.03.5
+  ucp:
+    username: docker
+    password: ${ucp_password}
+    version: docker/ucp:3.2.4
+resource:
+  aws_instance:
+    managers:
+      instance_type: t2.xlarge
+      os: CentOS 7
+      quantity: 3
+    registry:
+      instance_type: t2.xlarge
+      os: CentOS 7
+      quantity: 3
+    workers:
+      instance_type: t2.xlarge
+      os: CentOS 7
+      quantity: 3
+  aws_lb:
+    apps:
+      domain: ${subdomain}.${domain}
+      instances:
+      - workers
+      ports:
+      - 80:8080
+      - 443:8443
+    dtr:
+      domain: ${subdomain}.${domain}
+      instances:
+      - registry
+      ports:
+      - 443:443
+    ucp:
+      domain: ${subdomain}.${domain}
+      instances:
+      - managers
+      ports:
+      - 443:443
+      - 6443:6443
+  aws_route53_zone:
+    dns:
+      domain: ${domain}
+      subdomain: ${subdomain}
