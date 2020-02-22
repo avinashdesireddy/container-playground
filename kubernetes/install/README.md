@@ -2,31 +2,102 @@ Install Kubernetes
 ===
 ###### tags: `draft` `blog` `cheetsheet`
 
-1. Install Container runtime. Kubernetes supports multiple container runtime environments.
-    * Installing `docker` runtime
+1. Install Container runtime. Kubernetes supports multiple container runtime environments. Here we are installing docker runtime.
+    * Installing `docker` runtime on Ubuntu
     ```
     $ sudo apt-get update && apt-get upgrade -y
     $ sudo apt-get install docker.io
     ```
-    
-    * Installing `rkt` runtime
+    * Installing `docker` runtime on CentOS
+    ```
+    $ sudo yum update && yum upgrade -y
+    $ sudo yum install -y docker-ce
+    ```
+    Ref: https://kubernetes.io/docs/setup/production-environment/container-runtimes/#docker
+    ```
+    # Install Docker CE
+## Set up the repository
+### Install required packages.
+yum install yum-utils device-mapper-persistent-data lvm2
+
+### Add Docker repository.
+yum-config-manager --add-repo \
+  https://download.docker.com/linux/centos/docker-ce.repo
+
+## Install Docker CE.
+yum update && yum install \
+  containerd.io-1.2.10 \
+  docker-ce-19.03.4 \
+  docker-ce-cli-19.03.4
+
+## Create /etc/docker directory.
+mkdir /etc/docker
+
+# Setup daemon.
+cat > /etc/docker/daemon.json <<EOF
+{
+  "exec-opts": ["native.cgroupdriver=systemd"],
+  "log-driver": "json-file",
+  "log-opts": {
+    "max-size": "100m"
+  },
+  "storage-driver": "overlay2",
+  "storage-opts": [
+    "overlay2.override_kernel_check=true"
+  ]
+}
+EOF
+
+mkdir -p /etc/systemd/system/docker.service.d
+
+# Restart Docker
+systemctl daemon-reload
+systemctl restart docker
+```
 
 2. Add Kubernetes repository. 
+    Ubuntu
     *Edit/Add: /etc/apt/sources.list.d/kubernetes.list* and add the content
     ```
     deb    http://apt.kubernetes.io/    kubernetes-xenial    main
     ```
-3. Add a GPG key for hte packages and update the repo
+    Add GPG Key
     ```
     $ curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
     
     $ apt-get update
     ```
+
+
+    CentOS
+    *Edit/Add: /etc/yum.repos.d/kubernetes.repo*
+
+cat > /etc/yum.repos.d/kubernetes.repo <<EOF
+[kubernetes]
+name=Kubernetes
+baseurl=https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64
+enabled=1
+gpgcheck=1
+repo_gpgcheck=1
+gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
+EOF
     
 4. Install the pacakage
+    Ubuntu
     ```
     $ apt-get install -y kubeadm=1.14.1-00 kubelet=1.14.1-00 kubectl=1.14.1-00
     ```
+    CentOS
+    ```
+    sudo yum install -y kubelet kubeadm kubectl
+    systemctl enable kubelet.service
+
+    ```
+
+    TODO: Elaborate what is 
+    * kubeadm: the command to bootstrap the cluster.
+    * kubelet: the component that runs on all of the machines in your cluster and does things like starting pods and containers.
+    * kubectl: the command line util to talk to your cluster.
 
 ## Installing Kube master
 5. Delpoy POD network to use for Container Network Interface(CNI)
@@ -38,6 +109,8 @@ Install Kubernetes
         $ wget https://docs.projectcalico.org/v3.3/getting-started/kubernetes/installation/hosted/rbac-kdd.yaml
         $ wget https://docs.projectcalico.org/v3.3/getting-started/kubernetes/installation/hosted/kubernetes-datastore/calico-networking/1.7/calico.yaml
         ```
+        latest -- https://docs.projectcalico.org/v3.10/manifests/calico.yaml
+
      * View the content of calico.yaml to identify the IPV4POOL_CIDR   
 6. Initialize the master
     ```

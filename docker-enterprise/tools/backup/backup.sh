@@ -35,8 +35,6 @@ ucp-backup() {
 
     UCP_BACKUP_NAME=${BACKUP_BASE_LOCATION}/"ucp-${UCP_VERSION}-backup-$(date +"%Y%m%d_%H%M%S").tar"
 
-    UCP_ID=$(docker run --rm -i --name ucp -v /var/run/docker.sock:/var/run/docker.sock "docker/ucp:${UCP_VERSION}" id 2> /dev/null)
-
     echo "UCP backup starting ..."
     docker run --rm -i --name ucp \
         --log-driver none \
