@@ -3,8 +3,10 @@ version: '3.7'
 volumes:
   jenkins_home:
 
+
 networks:
   jenkins:
+    external: true
 
 services:
   jenkins:
@@ -16,14 +18,19 @@ services:
     networks:
       - jenkins 
     deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints:
+          - 'node.platform.os == linux'
+          - 'node.hostname == c3b4994ce810-workers-1'
       restart_policy:
         condition: any
         delay: 5s
         max_attempts: 5
       labels:
         com.docker.lb.hosts: jenkins.apps.avinash.dockerps.io
-        com.docker.lb.network: ci_jenkins
+        com.docker.lb.network: jenkins
         com.docker.lb.port: 8080
     ports:
-      - "5000:5000"
       - "50000:50000"

@@ -1,6 +1,7 @@
 variable:
-  region: "centralus"
-  subscriptionId: ""
+  region: "eastus"
+  subscriptionId: "sub-1cf3312c-54b3-4c3d-8bca-c2ec83fa5b87"
+  email: "adesireddy@mirantis.com"
   ucp_password: 
     type: prompt
 
@@ -12,6 +13,8 @@ provider:
     region: ${region}
 
 cluster:
+  cloudstor:
+    version: "18.09.2-ce-azure1"
   subscription:
     id: ${subscriptionId}
   engine:
@@ -33,7 +36,9 @@ resource:
       - "22/tcp"
       - "443/tcp"
       - "6443/tcp"
-      quantity: 3
+      - "8080/tcp"
+      - "8443/tcp"
+      quantity: 1
     registry:
       instance_type: Standard_DS3_v2
       os: CentOS 7.6
@@ -42,7 +47,7 @@ resource:
       - "22/tcp"
       - "443/tcp"
       - "6443/tcp"
-      quantity: 3
+      quantity: 1
     workers:
       instance_type: Standard_DS3_v2
       os: CentOS 7.6
@@ -51,11 +56,18 @@ resource:
       - "22/tcp"
       - "443/tcp"
       - "6443/tcp"
-      quantity: 3
-    windows:
-      instance_type: Standard_DS3_v2
-      os: "Windows Server 2019"
-      quantity: 3
+      - "8080/tcp"
+      - "8443/tcp"
+      quantity: 2
+#    windows:
+#      instance_type: Standard_DS3_v2
+#      os: "Windows Server 2019"
+#      ports:
+#      - "3389/tcp"
+#      - "22/tcp"
+#      - "443/tcp"
+#      - "6443/tcp"
+#      quantity: 2
   azurerm_lb:
     ucp:
       instances:
