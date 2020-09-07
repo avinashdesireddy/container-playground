@@ -1,0 +1,27 @@
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  namespace: blue
+  name: allow-ingress-traffic-to-blue-namespace
+spec:
+  podSelector:
+    matchLabels: {}
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          name: ingress
+---
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  namespace: red
+  name: allow-ingress-traffic-to-red-namespace
+spec:
+  podSelector:
+    matchLabels: {}
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          name: ingress

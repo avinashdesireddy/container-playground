@@ -1,26 +1,44 @@
 version: '3.8'
+
+networks:
+  monitoring:
+    external: true
+
 configs:
-    prometheus.yml:
-      file: ./prometheus.yml
+  prometheus.yml:
+    file: ./prometheus.yml
 
 services:
-    monitoring-prometheus:
-        image: prom/prometheus:latest
-        hostname: monitoring-prometheus
-        command:
-        - '--config.file=/etc/prometheus/prometheus.yml'
-        - '--storage.tsdb.path=/prometheus'            
-        #volumes:
-        #- prometheus-metrics-data:/prometheus
-        configs:
-        - source: prometheus.yml
-          target: /etc/prometheus/prometheus.yml
-        deploy:
-            restart_policy:
-              condition: any
-              delay: 5s
-              max_attempts: 5
-            labels:
-              com.docker.lb.hosts: prom.apps.avinash.dockerps.io
-              com.docker.lb.network: grafana-prometheus_monitoring-frontend
-              com.docker.lb.port: 9090
+  prometheus:
+    image: prom/prometheus:latest
+    command:
+    - '--config.file=/etc/prometheus/prometheus.yml'
+    - '--storage.tsdb.path=/prometheus'            
+    configs:
+    - source: prometheus.yml
+      target: /etc/prometheus/prometheus.yml
+    #ports:
+    #- "4999:9323"
+    networks:
+    - monitoring
+    deploy:
+      restart_policy:
+        condition: any
+        delay: 5s
+        max_attempts: 5
+      labels:
+        com.docker.lb.hosts: prom.apps.avinash.dockerps.io
+        com.docker.lb.network: monitoring
+        com.docker.lb.port: 9090
+
+  docker-exporter:
+    image: basi/socat:latest
+    environment:
+    - IN="172.31.11.42:9323"
+    - OUT="4999"
+    ports:
+      - published: 4999
+    deploy:
+      mode: global
+    networks: 
+    - monitoring

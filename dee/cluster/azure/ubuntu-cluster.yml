@@ -1,0 +1,80 @@
+variable:
+  region: "eastus"
+  name: "avinash-dci-rg"
+  subscriptionId: "sub-1cf3312c-54b3-4c3d-8bca-c2ec83fa5b87"
+  email: "adesireddy@mirantis.com"
+  ucp_password: 
+    type: prompt
+
+provider:
+  acme:
+    email: ${email}
+    server_url: https://acme-staging-v02.api.letsencrypt.org/directory
+  azurerm:
+    region: ${region}
+    resource_group: ${name}
+
+cluster:
+  subscription:
+    id: ${subscriptionId}
+  engine:
+    version: ee-stable-19.03
+  ucp:
+    version: docker/ucp:3.2.5
+    username: docker
+    password: ${ucp_password}
+  dtr:
+    version: docker/dtr:2.7.5
+
+resource:
+  azurerm_virtual_machine:
+    managers:
+      instance_type: Standard_DS3_v2
+      data_disk_size: 40
+      ports:
+      - "22/tcp"
+      - "443/tcp"
+      - "6443/tcp"
+      - "8080/tcp"
+      - "8443/tcp"
+      quantity: 1
+    registry:
+      instance_type: Standard_DS3_v2
+      data_disk_size: 40
+      ports:
+      - "22/tcp"
+      - "443/tcp"
+      - "6443/tcp"
+      quantity: 1
+    workers:
+      instance_type: Standard_DS3_v2
+      data_disk_size: 40
+      ports:
+      - "22/tcp"
+      - "443/tcp"
+      - "6443/tcp"
+      - "8080/tcp"
+      - "8443/tcp"
+      quantity: 2
+#    windows:
+#      instance_type: Standard_DS3_v2
+#      os: "Windows Server 2019"
+#      ports:
+#      - "3389/tcp"
+#      - "22/tcp"
+#      - "443/tcp"
+#      - "6443/tcp"
+#      quantity: 2
+  azurerm_lb:
+    ucp:
+      instances:
+      - managers
+      ports:
+      - "443:443"
+      - "6443:6443"
+    dtr:
+      instances:
+      - registry
+      ports:
+      - "443:443"
+      - "80:80"

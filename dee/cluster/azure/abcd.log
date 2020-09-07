@@ -1,0 +1,293 @@
+OME-SUCCESS-pibwomkbedoexxckodchlolzksfdvquz ; python3'"'"'"'"'"'"'"'"' && sleep 0'"'"''
+DEBU[1098] Escalation succeeded
+DEBU[1098] <13.90.59.125> (0, b'\n{"redirected": false, "url": "https://13.90.59.125/_ping", "status": 200, "cache_control": "no-cache, no-store, must-revalidate", "content_type": "text/plain", "ping_finish_time": "1588167655896804263", "ping_receive_time": "1588167655841975845", "x_content_type_options": "nosniff", "x_frame_options": "sameorigin", "x_xss_protection": "1; mode=block", "date": "Wed, 29 Apr 2020 13:40:55 GMT", "content_length": "2", "connection": "close", "cookies_string": "", "cookies": {}, "msg": "OK (2 bytes)", "elapsed": 0, "changed": false, "invocation": {"module_args": {"url": "https://13.90.59.125/_ping", "validate_certs": false, "force": false, "http_agent": "ansible-httpget", "use_proxy": true, "force_basic_auth": false, "body_format": "raw", "method": "GET", "return_content": false, "follow_redirects": "safe", "status_code": [200], "timeout": 30, "headers": {}, "follow": false, "url_username": null, "url_password": null, "client_cert": null, "client_key": null, "dest": null, "body": null, "src": null, "creates": null, "removes": null, "unix_socket": null, "mode": null, "owner": null, "group": null, "seuser": null, "serole": null, "selevel": null, "setype": null, "attributes": null, "content": null, "backup": null, "remote_src": null, "regexp": null, "delimiter": null, "directory_mode": null, "unsafe_writes": null}}}\n', b'')
+DEBU[1098] <13.90.59.125> ESTABLISH SSH CONNECTION FOR USER: ubuntu
+DEBU[1098] <13.90.59.125> SSH: EXEC ssh -C -o ConnectionAttempts=120 -o ServerAliveInterval=30 -o ControlMaster=auto -o ControlPersist=1800s -o StrictHostKeyChecking=no -o 'IdentityFile="/data/keys/ssh/id_rsa"' -o KbdInteractiveAuthentication=no -o PreferredAuthentications=gssapi-with-mic,gssapi-keyex,hostbased,publickey -o PasswordAuthentication=no -o 'User="ubuntu"' -o ConnectTimeout=10 -o ControlPath=/tmp/ansible-ssh-%h-%p-%r 13.90.59.125 '/bin/sh -c '"'"'rm -f -r /home/ubuntu/.ansible/tmp/ansible-tmp-1588167654.7980814-53566506441270/ > /dev/null 2>&1 && sleep 0'"'"''
+DEBU[1098] <13.90.59.125> (0, b'', b'')
+DEBU[1098] ok: [ca23d94ea36e-managers-1] => changed=false
+DEBU[1098]   attempts: 1
+DEBU[1098]   cache_control: no-cache, no-store, must-revalidate
+DEBU[1098]   connection: close
+DEBU[1098]   content_length: '2'
+DEBU[1098]   content_type: text/plain
+DEBU[1098]   cookies: {}
+DEBU[1098]   cookies_string: ''
+DEBU[1098]   date: Wed, 29 Apr 2020 13:40:55 GMT
+DEBU[1098]   elapsed: 0
+DEBU[1098]   invocation:
+DEBU[1098]     module_args:
+DEBU[1098]       attributes: null
+DEBU[1098]       backup: null
+DEBU[1098]       body: null
+DEBU[1098]       body_format: raw
+DEBU[1098]       client_cert: null
+DEBU[1098]       client_key: null
+DEBU[1098]       content: null
+DEBU[1098]       creates: null
+DEBU[1098]       delimiter: null
+DEBU[1098]       dest: null
+DEBU[1098]       directory_mode: null
+DEBU[1098]       follow: false
+DEBU[1098]       follow_redirects: safe
+DEBU[1098]       force: false
+DEBU[1098]       force_basic_auth: false
+DEBU[1098]       group: null
+DEBU[1098]       headers: {}
+DEBU[1098]       http_agent: ansible-httpget
+DEBU[1098]       method: GET
+DEBU[1098]       mode: null
+DEBU[1098]       owner: null
+DEBU[1098]       regexp: null
+DEBU[1098]       remote_src: null
+DEBU[1098]       removes: null
+DEBU[1098]       return_content: false
+DEBU[1098]       selevel: null
+DEBU[1098]       serole: null
+DEBU[1098]       setype: null
+DEBU[1098]       seuser: null
+DEBU[1098]       src: null
+DEBU[1098]       status_code:
+DEBU[1098]       - 200
+DEBU[1098]       timeout: 30
+DEBU[1098]       unix_socket: null
+DEBU[1098]       unsafe_writes: null
+DEBU[1098]       url: https://13.90.59.125/_ping
+DEBU[1098]       url_password: null
+DEBU[1098]       url_username: null
+DEBU[1098]       use_proxy: true
+DEBU[1098]       validate_certs: false
+DEBU[1098]   msg: OK (2 bytes)
+DEBU[1098]   ping_finish_time: '1588167655896804263'
+DEBU[1098]   ping_receive_time: '1588167655841975845'
+DEBU[1098]   redirected: false
+DEBU[1098]   status: 200
+DEBU[1098]   url: https://13.90.59.125/_ping
+DEBU[1098]   x_content_type_options: nosniff
+DEBU[1098]   x_frame_options: sameorigin
+DEBU[1098]   x_xss_protection: 1; mode=block
+DEBU[1099]
+DEBU[1099] TASK [ucp : Validate workers.] *************************************************
+DEBU[1099] task path: /cluster/ansible/roles/ucp/tasks/main.yml:19
+DEBU[1099] skipping: [ca23d94ea36e-managers-1] => changed=false
+DEBU[1099]   skip_reason: Conditional result was False
+DEBU[1099]
+DEBU[1099] TASK [ucp : Uninstall UCP.] ****************************************************
+DEBU[1099] task path: /cluster/ansible/roles/ucp/tasks/main.yml:26
+DEBU[1099] skipping: [ca23d94ea36e-managers-1] => changed=false
+DEBU[1099]   skip_reason: Conditional result was False
+DEBU[1099]
+DEBU[1099] TASK [ucp : Upgrade UCP.] ******************************************************
+DEBU[1099] task path: /cluster/ansible/roles/ucp/tasks/main.yml:33
+DEBU[1099] skipping: [ca23d94ea36e-managers-1] => changed=false
+DEBU[1099]   skip_reason: Conditional result was False
+DEBU[1099]
+DEBU[1099] TASK [ucp : Logs.] *************************************************************
+DEBU[1099] task path: /cluster/ansible/roles/ucp/tasks/main.yml:40
+DEBU[1099] skipping: [ca23d94ea36e-managers-1] => changed=false
+DEBU[1099]   skip_reason: Conditional result was False
+DEBU[1099]
+DEBU[1099] TASK [ucp : Auth] **************************************************************
+DEBU[1099] task path: /cluster/ansible/roles/ucp/tasks/main.yml:47
+DEBU[1099] skipping: [ca23d94ea36e-managers-1] => changed=false
+DEBU[1099]   skip_reason: Conditional result was False
+DEBU[1099]
+DEBU[1099] TASK [ucp : Pull Config] *******************************************************
+DEBU[1099] task path: /cluster/ansible/roles/ucp/tasks/main.yml:54
+DEBU[1099] skipping: [ca23d94ea36e-managers-1] => changed=false
+DEBU[1099]   skip_reason: Conditional result was False
+DEBU[1099]
+DEBU[1099] TASK [ucp : Push Config] *******************************************************
+DEBU[1099] task path: /cluster/ansible/roles/ucp/tasks/main.yml:61
+DEBU[1099] skipping: [ca23d94ea36e-managers-1] => changed=false
+DEBU[1099]   skip_reason: Conditional result was False
+DEBU[1099]
+DEBU[1099] TASK [ucp : Backup.] ***********************************************************
+DEBU[1099] task path: /cluster/ansible/roles/ucp/tasks/main.yml:68
+DEBU[1099] skipping: [ca23d94ea36e-managers-1] => changed=false
+DEBU[1099]   skip_reason: Conditional result was False
+DEBU[1099]
+DEBU[1099] TASK [ucp : Restore.] **********************************************************
+DEBU[1099] task path: /cluster/ansible/roles/ucp/tasks/main.yml:75
+DEBU[1099] skipping: [ca23d94ea36e-managers-1] => changed=false
+DEBU[1099]   skip_reason: Conditional result was False
+DEBU[1099]
+DEBU[1099] TASK [ucp : Add LB to SANs] ****************************************************
+DEBU[1099] task path: /cluster/ansible/roles/ucp/tasks/main.yml:82
+DEBU[1099] skipping: [ca23d94ea36e-managers-1] => changed=false
+DEBU[1099]   skip_reason: Conditional result was False
+DEBU[1099] META: ran handlers
+DEBU[1099] META: ran handlers
+DEBU[1099]
+DEBU[1099] PLAY [Verifying UCP install on workers] ****************************************
+DEBU[1099] META: ran handlers
+DEBU[1099]
+DEBU[1099] TASK [ucp : Install.] **********************************************************
+DEBU[1099] task path: /cluster/ansible/roles/ucp/tasks/main.yml:5
+DEBU[1099] skipping: [ca23d94ea36e-workers-1] => changed=false
+DEBU[1099]   skip_reason: Conditional result was False
+DEBU[1099] skipping: [ca23d94ea36e-workers-2] => changed=false
+DEBU[1099]   skip_reason: Conditional result was False
+DEBU[1099] skipping: [ca23d94ea36e-registry-1] => changed=false
+DEBU[1099]   skip_reason: Conditional result was False
+DEBU[1099]
+DEBU[1099] TASK [ucp : Validate managers.] ************************************************
+DEBU[1099] task path: /cluster/ansible/roles/ucp/tasks/main.yml:12
+DEBU[1099] skipping: [ca23d94ea36e-workers-1] => changed=false
+DEBU[1099]   skip_reason: Conditional result was False
+DEBU[1099] skipping: [ca23d94ea36e-workers-2] => changed=false
+DEBU[1099]   skip_reason: Conditional result was False
+DEBU[1099] skipping: [ca23d94ea36e-registry-1] => changed=false
+DEBU[1099]   skip_reason: Conditional result was False
+DEBU[1099]
+DEBU[1099] TASK [ucp : Validate workers.] *************************************************
+DEBU[1099] task path: /cluster/ansible/roles/ucp/tasks/main.yml:19
+DEBU[1099] included: /cluster/ansible/roles/ucp/tasks/validate-workers/main.yml for ca23d94ea36e-workers-1, ca23d94ea36e-workers-2, ca23d94ea36e-registry-1
+DEBU[1099]
+DEBU[1099] TASK [ucp : include_tasks] *****************************************************
+DEBU[1099] task path: /cluster/ansible/roles/ucp/tasks/validate-workers/main.yml:6
+DEBU[1099] skipping: [ca23d94ea36e-workers-1] => (item=RedHat)  => changed=false
+DEBU[1099]   ansible_loop_var: os_family
+DEBU[1099]   os_family: RedHat
+DEBU[1099]   skip_reason: Conditional result was False
+DEBU[1099] skipping: [ca23d94ea36e-workers-1] => (item=Suse)  => changed=false
+DEBU[1099]   ansible_loop_var: os_family
+DEBU[1099]   os_family: Suse
+DEBU[1099]   skip_reason: Conditional result was False
+DEBU[1099] skipping: [ca23d94ea36e-workers-1] => (item=Windows)  => changed=false
+DEBU[1099]   ansible_loop_var: os_family
+DEBU[1099]   os_family: Windows
+DEBU[1099]   skip_reason: Conditional result was False
+DEBU[1099] skipping: [ca23d94ea36e-workers-2] => (item=RedHat)  => changed=false
+DEBU[1099]   ansible_loop_var: os_family
+DEBU[1099]   os_family: RedHat
+DEBU[1099]   skip_reason: Conditional result was False
+DEBU[1099] skipping: [ca23d94ea36e-workers-2] => (item=Suse)  => changed=false
+DEBU[1099]   ansible_loop_var: os_family
+DEBU[1099]   os_family: Suse
+DEBU[1099]   skip_reason: Conditional result was False
+DEBU[1099] skipping: [ca23d94ea36e-workers-2] => (item=Windows)  => changed=false
+DEBU[1099]   ansible_loop_var: os_family
+DEBU[1099]   os_family: Windows
+DEBU[1099]   skip_reason: Conditional result was False
+DEBU[1099] skipping: [ca23d94ea36e-registry-1] => (item=RedHat)  => changed=false
+DEBU[1099]   ansible_loop_var: os_family
+DEBU[1099]   os_family: RedHat
+DEBU[1099]   skip_reason: Conditional result was False
+DEBU[1099] skipping: [ca23d94ea36e-registry-1] => (item=Suse)  => changed=false
+DEBU[1099]   ansible_loop_var: os_family
+DEBU[1099]   os_family: Suse
+DEBU[1099]   skip_reason: Conditional result was False
+DEBU[1099] skipping: [ca23d94ea36e-registry-1] => (item=Windows)  => changed=false
+DEBU[1099]   ansible_loop_var: os_family
+DEBU[1099]   os_family: Windows
+DEBU[1099]   skip_reason: Conditional result was False
+DEBU[1100] included: /cluster/ansible/roles/ucp/tasks/validate-workers/Debian.yml for ca23d94ea36e-workers-1, ca23d94ea36e-workers-2, ca23d94ea36e-registry-1
+DEBU[1100]
+DEBU[1100] TASK [ucp : Check for ucp-proxy container.] ************************************
+DEBU[1100] task path: /cluster/ansible/roles/ucp/tasks/validate-workers/Debian.yml:5
+DEBU[1100] Using module file /usr/lib/python3.7/site-packages/ansible/modules/commands/command.py
+DEBU[1100] Pipelining is enabled.
+DEBU[1100] <13.90.57.183> ESTABLISH SSH CONNECTION FOR USER: ubuntu
+DEBU[1100] <13.90.57.183> SSH: EXEC ssh -C -o ConnectionAttempts=120 -o ServerAliveInterval=30 -o ControlMaster=auto -o ControlPersist=1800s -o StrictHostKeyChecking=no -o 'IdentityFile="/data/keys/ssh/id_rsa"' -o KbdInteractiveAuthentication=no -o PreferredAuthentications=gssapi-with-mic,gssapi-keyex,hostbased,publickey -o PasswordAuthentication=no -o 'User="ubuntu"' -o ConnectTimeout=10 -o ControlPath=/tmp/ansible-ssh-%h-%p-%r 13.90.57.183 '/bin/sh -c '"'"'sudo -H -S -n  -u root /bin/sh -c '"'"'"'"'"'"'"'"'echo BECOME-SUCCESS-royxflyznpxuscuovtiscbzkuntssvlj ; python3'"'"'"'"'"'"'"'"' && sleep 0'"'"''
+DEBU[1100] Using module file /usr/lib/python3.7/site-packages/ansible/modules/commands/command.py
+DEBU[1100] Pipelining is enabled.
+DEBU[1100] <13.90.57.50> ESTABLISH SSH CONNECTION FOR USER: ubuntu
+DEBU[1100] <13.90.57.50> SSH: EXEC ssh -C -o ConnectionAttempts=120 -o ServerAliveInterval=30 -o ControlMaster=auto -o ControlPersist=1800s -o StrictHostKeyChecking=no -o 'IdentityFile="/data/keys/ssh/id_rsa"' -o KbdInteractiveAuthentication=no -o PreferredAuthentications=gssapi-with-mic,gssapi-keyex,hostbased,publickey -o PasswordAuthentication=no -o 'User="ubuntu"' -o ConnectTimeout=10 -o ControlPath=/tmp/ansible-ssh-%h-%p-%r 13.90.57.50 '/bin/sh -c '"'"'sudo -H -S -n  -u root /bin/sh -c '"'"'"'"'"'"'"'"'echo BECOME-SUCCESS-fluiwgmuonzczwcdutcdqmjprziggtqd ; python3'"'"'"'"'"'"'"'"' && sleep 0'"'"''
+DEBU[1100] Using module file /usr/lib/python3.7/site-packages/ansible/modules/commands/command.py
+DEBU[1100] Pipelining is enabled.
+DEBU[1100] <13.90.59.245> ESTABLISH SSH CONNECTION FOR USER: ubuntu
+DEBU[1100] <13.90.59.245> SSH: EXEC ssh -C -o ConnectionAttempts=120 -o ServerAliveInterval=30 -o ControlMaster=auto -o ControlPersist=1800s -o StrictHostKeyChecking=no -o 'IdentityFile="/data/keys/ssh/id_rsa"' -o KbdInteractiveAuthentication=no -o PreferredAuthentications=gssapi-with-mic,gssapi-keyex,hostbased,publickey -o PasswordAuthentication=no -o 'User="ubuntu"' -o ConnectTimeout=10 -o ControlPath=/tmp/ansible-ssh-%h-%p-%r 13.90.59.245 '/bin/sh -c '"'"'sudo -H -S -n  -u root /bin/sh -c '"'"'"'"'"'"'"'"'echo BECOME-SUCCESS-qgemmgmtwttjixmlbphofzesbqmftnus ; python3'"'"'"'"'"'"'"'"' && sleep 0'"'"''
+DEBU[1100] Escalation succeeded
+DEBU[1100] Escalation succeeded
+DEBU[1100] Escalation succeeded
+DEBU[1100] <13.90.57.50> (1, b'\n{"msg": "non-zero return code", "cmd": "docker inspect ucp-proxy", "stdout": "[]", "stderr": "Error: No such object: ucp-proxy", "rc": 1, "start": "2020-04-29 13:40:57.804276", "end": "2020-04-29 13:40:57.873239", "delta": "0:00:00.068963", "changed": true, "failed": true, "invocation": {"module_args": {"_raw_params": "docker inspect ucp-proxy", "_uses_shell": true, "warn": true, "stdin_add_newline": true, "strip_empty_ends": true, "argv": null, "chdir": null, "executable": null, "creates": null, "removes": null, "stdin": null}}}\n', b'')
+DEBU[1100] <13.90.57.50> Failed to connect to the host via ssh:
+DEBU[1100] fatal: [ca23d94ea36e-workers-2]: FAILED! => changed=true
+DEBU[1100]   cmd: docker inspect ucp-proxy
+DEBU[1100]   delta: '0:00:00.068963'
+DEBU[1100]   end: '2020-04-29 13:40:57.873239'
+DEBU[1100]   invocation:
+DEBU[1100]     module_args:
+DEBU[1100]       _raw_params: docker inspect ucp-proxy
+DEBU[1100]       _uses_shell: true
+DEBU[1100]       argv: null
+DEBU[1100]       chdir: null
+DEBU[1100]       creates: null
+DEBU[1100]       executable: null
+DEBU[1100]       removes: null
+DEBU[1100]       stdin: null
+DEBU[1100]       stdin_add_newline: true
+DEBU[1100]       strip_empty_ends: true
+DEBU[1100]       warn: true
+DEBU[1100]   msg: non-zero return code
+DEBU[1100]   rc: 1
+DEBU[1100]   start: '2020-04-29 13:40:57.804276'
+DEBU[1100]   stderr: 'Error: No such object: ucp-proxy'
+DEBU[1100]   stderr_lines: <omitted>
+DEBU[1100]   stdout: '[]'
+DEBU[1100]   stdout_lines: <omitted>
+DEBU[1100] <13.90.57.183> (1, b'\n{"msg": "non-zero return code", "cmd": "docker inspect ucp-proxy", "stdout": "[]", "stderr": "Error: No such object: ucp-proxy", "rc": 1, "start": "2020-04-29 13:40:57.882137", "end": "2020-04-29 13:40:57.953901", "delta": "0:00:00.071764", "changed": true, "failed": true, "invocation": {"module_args": {"_raw_params": "docker inspect ucp-proxy", "_uses_shell": true, "warn": true, "stdin_add_newline": true, "strip_empty_ends": true, "argv": null, "chdir": null, "executable": null, "creates": null, "removes": null, "stdin": null}}}\n', b'')
+DEBU[1100] <13.90.57.183> Failed to connect to the host via ssh:
+DEBU[1100] fatal: [ca23d94ea36e-workers-1]: FAILED! => changed=true
+DEBU[1100]   cmd: docker inspect ucp-proxy
+DEBU[1100]   delta: '0:00:00.071764'
+DEBU[1100]   end: '2020-04-29 13:40:57.953901'
+DEBU[1100]   invocation:
+DEBU[1100]     module_args:
+DEBU[1100]       _raw_params: docker inspect ucp-proxy
+DEBU[1100]       _uses_shell: true
+DEBU[1100]       argv: null
+DEBU[1100]       chdir: null
+DEBU[1100]       creates: null
+DEBU[1100]       executable: null
+DEBU[1100]       removes: null
+DEBU[1100]       stdin: null
+DEBU[1100]       stdin_add_newline: true
+DEBU[1100]       strip_empty_ends: true
+DEBU[1100]       warn: true
+DEBU[1100]   msg: non-zero return code
+DEBU[1100]   rc: 1
+DEBU[1100]   start: '2020-04-29 13:40:57.882137'
+DEBU[1100]   stderr: 'Error: No such object: ucp-proxy'
+DEBU[1100]   stderr_lines: <omitted>
+DEBU[1100]   stdout: '[]'
+DEBU[1100]   stdout_lines: <omitted>
+DEBU[1101] <13.90.59.245> (1, b'\n{"msg": "non-zero return code", "cmd": "docker inspect ucp-proxy", "stdout": "[]", "stderr": "Error: No such object: ucp-proxy", "rc": 1, "start": "2020-04-29 13:40:58.080097", "end": "2020-04-29 13:40:58.147670", "delta": "0:00:00.067573", "changed": true, "failed": true, "invocation": {"module_args": {"_raw_params": "docker inspect ucp-proxy", "_uses_shell": true, "warn": true, "stdin_add_newline": true, "strip_empty_ends": true, "argv": null, "chdir": null, "executable": null, "creates": null, "removes": null, "stdin": null}}}\n', b'')
+DEBU[1101] <13.90.59.245> Failed to connect to the host via ssh:
+DEBU[1101] fatal: [ca23d94ea36e-registry-1]: FAILED! => changed=true
+DEBU[1101]   cmd: docker inspect ucp-proxy
+DEBU[1101]   delta: '0:00:00.067573'
+DEBU[1101]   end: '2020-04-29 13:40:58.147670'
+DEBU[1101]   invocation:
+DEBU[1101]     module_args:
+DEBU[1101]       _raw_params: docker inspect ucp-proxy
+DEBU[1101]       _uses_shell: true
+DEBU[1101]       argv: null
+DEBU[1101]       chdir: null
+DEBU[1101]       creates: null
+DEBU[1101]       executable: null
+DEBU[1101]       removes: null
+DEBU[1101]       stdin: null
+DEBU[1101]       stdin_add_newline: true
+DEBU[1101]       strip_empty_ends: true
+DEBU[1101]       warn: true
+DEBU[1101]   msg: non-zero return code
+DEBU[1101]   rc: 1
+DEBU[1101]   start: '2020-04-29 13:40:58.080097'
+DEBU[1101]   stderr: 'Error: No such object: ucp-proxy'
+DEBU[1101]   stderr_lines: <omitted>
+DEBU[1101]   stdout: '[]'
+DEBU[1101]   stdout_lines: <omitted>
+DEBU[1101]
+DEBU[1101] NO MORE HOSTS LEFT *************************************************************
+DEBU[1101]
+DEBU[1101] PLAY RECAP *********************************************************************
+DEBU[1101] ca23d94ea36e-managers-1    : ok=132  changed=43   unreachable=0    failed=0    skipped=153  rescued=0    ignored=1
+DEBU[1101] ca23d94ea36e-registry-1    : ok=92   changed=27   unreachable=0    failed=1    skipped=76   rescued=0    ignored=0
+DEBU[1101] ca23d94ea36e-workers-1     : ok=93   changed=27   unreachable=0    failed=1    skipped=76   rescued=0    ignored=0
+DEBU[1101] ca23d94ea36e-workers-2     : ok=92   changed=27   unreachable=0    failed=1    skipped=76   rescued=0    ignored=0
+DEBU[1101] localhost                  : ok=36   changed=4    unreachable=0    failed=0    skipped=7    rescued=0    ignored=0
+DEBU[1101]
+
+Error: apply exited with 2
+

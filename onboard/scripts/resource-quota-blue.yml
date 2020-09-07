@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: resource-quota-blue
+  namespace: blue
+spec:
+  hard:
+      requests.cpu: "16"
+      requests.memory: "64Gi"
+      requests.storage: "64Gi"
