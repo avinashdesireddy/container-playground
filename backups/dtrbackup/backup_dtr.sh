@@ -10,18 +10,15 @@ function error_exit {
 
 [[ -z $UCP_URL ]] && error_exit "you must specify a UCP URL to backup from"
 [[ -z $UCP_USER ]] && error_exit "you must specify a UCP User with admin privileges"
-[[ ! -f /run/secrets/password ]] && error_exit "you must mount a docker secret with your admin password in /run/secrets/password; see 'docker secrets' usage."
-
-UCP_PASSWORD="$(cat /run/secrets/password)"
-
-DTR_VERSION=$(docker inspect $(docker ps -aq --filter=name=dtr-registry | head -n 1) | jq -r '.[].Config.Env[]' | grep DTR_VERSION | cut -d "=" -f 2 )
-DTR_REPLICA_ID=$(docker inspect $(docker ps -aq --filter=name=dtr-registry | head -n 1) | jq -r '.[].Config.Env[]' | grep DTR_REPLICA_ID | cut -d "=" -f 2)
+[[ -z $UCP_PASSWORD ]] && error_exit "password"
+[[ -z $DTR_VERSION ]] && error_exit "MSR Version"
+[[ -z $DTR_REPLICA_ID ]] && error_exit "MSR Replica ID"
 
 echo "calling backup against ${UCP_URL} with replica ${DTR_REPLICA_ID} and dtr:${DTR_VERSION} image..."
 
 docker run --rm \
   --env UCP_PASSWORD \
-  docker/dtr:${DTR_VERSION} backup \
+  mirantis/dtr:${DTR_VERSION} backup \
   --debug \
   --ucp-url ${UCP_URL} \
   --ucp-insecure-tls \

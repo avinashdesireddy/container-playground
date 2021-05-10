@@ -1,0 +1,96 @@
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: ucp-password
+type: Opaque
+data:
+  password: TWtlYWRtaW4h
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: msr-backup
+spec:
+  schedule: "*/59 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: dtr-backup
+            image: avinashdesireddy/dtrbackup:latest
+            imagePullPolicy: Always
+            volumeMounts:
+            - mountPath: /var/run/docker.sock
+              name: docker-socket-volume
+            - mountPath: /backup/
+              name: backup-volume
+            securityContext:
+              privileged: true
+            env:
+              - name: DTR_REPLICA_ID
+                value: "7fe8bb33d711"
+              - name: UCP_INSECURE_TLS
+                value: "true"
+              - name: UCP_URL
+                value: "https://ucp.avinash.dockerps.io"
+              - name: UCP_PASSWORD
+                valueFrom:
+                  secretKeyRef:
+                    name: ucp-password
+                    key: password
+              - name: UCP_USER
+                value: "admin"
+              - name: DTR_VERSION
+                value: "2.8.5"
+          restartPolicy: OnFailure
+          nodeName: ip-172-16-247-193.us-west-1.compute.internal
+          volumes:
+          - name: docker-socket-volume
+            hostPath:
+              path: /var/run/docker.sock
+              type: File
+          - name: backup-volume
+            hostPath:
+              path: /backup
+              type: Directory
+
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: mke-backup
+spec:
+  schedule: "*/1 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: mke-backup
+            image: avinashdesireddy/mkebackup:latest
+            imagePullPolicy: Always
+            volumeMounts:
+            - mountPath: /var/run/docker.sock
+              name: docker-socket-volume
+            - mountPath: /backup/
+              name: backup-volume
+            securityContext:
+              privileged: true
+            env:
+              - name: UCP_URL
+                value: "https://ucp.avinash.dockerps.io"
+              - name: UCP_VERSION
+                value: "3.3.5"
+          restartPolicy: OnFailure
+          nodeName: ip-172-16-247-193.us-west-1.compute.internal
+          volumes:
+          - name: docker-socket-volume
+            hostPath:
+              path: /var/run/docker.sock
+              type: File
+          - name: backup-volume
+            hostPath:
+              path: /backup
+              type: Directory
